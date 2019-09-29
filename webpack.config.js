@@ -1,35 +1,48 @@
-const path = require('path')
-module.exports =
-{
-    entry: './src/app.js',
-    output: 
-    {
-        path: path.join(__dirname, 'public'),
-        filename: 'bundle.js'
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = env => {
+  const isProduction = env === "production";
+  const CSSExtract = new MiniCssExtractPlugin({ filename: "styles.css" });
+
+  return {
+    entry: "./src/app.js",
+    output: {
+      path: path.join(__dirname, "public"),
+      filename: "bundle.js"
     },
-    module:
-    {
-        rules: 
-        [
+    module: {
+      rules: [
+        {
+          loader: "babel-loader",
+          test: /\.js$/,
+          exclude: /node_modules/
+        },
+        {
+          test: /\.s?css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
             {
-                loader: 'babel-loader',
-                test: /\.js$/,
-                exclude: /node_modules/
+              loader: "css-loader",
+              options: {
+                sourceMap: true
+              }
             },
             {
-                test: /\.s?css$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+              loader: "sass-loader",
+              options: {
+                sourceMap: true
+              }
             }
-        ]
+          ]
+        }
+      ]
     },
-    devtool: "cheap-module-eval-source-map ",
-    devServer:
-    {
-        contentBase: path.join(__dirname, 'public'),
-        historyApiFallback: true
+    plugins: [CSSExtract],
+    devtool: isProduction ? "source-map" : "inline-source-map",
+    devServer: {
+      contentBase: path.join(__dirname, "public"),
+      historyApiFallback: true
     }
+  };
 };
