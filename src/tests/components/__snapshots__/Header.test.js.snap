@@ -7,24 +7,15 @@ exports[`Should render Header component correctly 1`] = `
   </h1>
   <NavLink
     activeClassName="is-active"
-    exact={true}
-    to="/"
+    to="/dashboard"
   >
     Dashboard
   </NavLink>
   <NavLink
     activeClassName="is-active"
-    exact={true}
     to="/create"
   >
     Create Expense
-  </NavLink>
-  <NavLink
-    activeClassName="is-active"
-    exact={true}
-    to="/help"
-  >
-    Help
   </NavLink>
   <button
     onClick={[Function]}
