@@ -1,6 +1,5 @@
 import expensesReducers from "../../reducers/expenses";
 import expenses from "../fixtures/expenses";
-import expensesReducer from "../../reducers/expenses";
 
 test("Should set default state", () => {
   const state = expensesReducers(undefined, { type: "@@INIT" });
@@ -43,7 +42,7 @@ test("Should edit expense", () => {
     description: "description 1 update test"
   };
   const action = { type: "EDIT_EXPENSE", updates, id: "1" };
-  const state = expensesReducer(expenses, action);
+  const state = expensesReducers(expenses, action);
   expect(state[0].description).toBe("description 1 update test");
 });
 
@@ -52,7 +51,7 @@ test("Should not edit expense if expense not found", () => {
     description: "description no update test"
   };
   const action = { type: "EDIT_EXPENSE", updates, id: "-1" };
-  const state = expensesReducer(expenses, action);
+  const state = expensesReducers(expenses, action);
   expect(state).toEqual(expenses);
 });
 
@@ -61,6 +60,6 @@ test("Should set expenes", () => {
     type: "SET_EXPENSES",
     expenses: [expenses[1]]
   };
-  const state = expensesReducer(expenses, action);
+  const state = expensesReducers(expenses, action);
   expect(state).toEqual([expenses[1]]);
 });
